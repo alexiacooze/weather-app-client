@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// src/App.tsx
+import React from "react";
+import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client";
+import Weather from "./components/landing/weather";
 
-function App() {
+const client = new ApolloClient({
+  uri: "http://localhost:4000/graphql", // Your GraphQL endpoint
+  cache: new InMemoryCache(),
+});
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="min-h-screen bg-gray-100 p-6">
+        <Weather />
+      </div>
+    </ApolloProvider>
   );
-}
+};
 
 export default App;

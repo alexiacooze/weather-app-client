@@ -15,12 +15,15 @@
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx"
   },
   "include": [
+    // Remove the files that are not found or create them in the 'src' directory
+    // "src/auth.js",
+    // "src/firebase.js",
+    // "src/firebaseConfig.js"
     "src"
   ]
 }
