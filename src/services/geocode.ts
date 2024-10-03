@@ -1,10 +1,8 @@
-// src/services/geocode.ts
 import axios from "axios";
 
-const OPEN_CAGE_API_KEY = "af0e169d4c7d4c75b4583d9908a92cdf"; // Replace with your API key
+const OPEN_CAGE_API_KEY = "af0e169d4c7d4c75b4583d9908a92cdf"; 
 
-
-// This function will now return a list of matching city options
+// Function to fetch city options from OpenCage API
 export const getCityOptions = async (city: string) => {
   try {
     const response = await axios.get(
@@ -15,11 +13,10 @@ export const getCityOptions = async (city: string) => {
       return [];
     }
 
-    // Map results to an array of city options
     return response.data.results.map((result: any) => ({
-      city: result.formatted,  // City name or full address
-      lat: result.geometry.lat,  // Latitude
-      lon: result.geometry.lng,  // Longitude
+      city: result.formatted, 
+      lat: result.geometry.lat,  
+      lon: result.geometry.lng,  
     }));
   } catch (error) {
     console.error('Error fetching city options:', error);

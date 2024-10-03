@@ -1,10 +1,9 @@
-// src/App.tsx
 import React from "react";
 import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client";
 import Weather from "./components/landing/weather";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql", // Your GraphQL endpoint
+  uri: "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
 });
 

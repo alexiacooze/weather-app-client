@@ -24,16 +24,16 @@ const Weather: React.FC = () => {
   const [city, setCity] = useState("");
   const [cityOptions, setCityOptions] = useState<CityOption[]>([]);
   const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
-  const [isInvalidCity, setIsInvalidCity] = useState(false); // To track if the city is invalid
+  const [isInvalidCity, setIsInvalidCity] = useState(false);
 
   const [fetchWeather, { data, loading, error }] =
     useLazyQuery<WeatherData>(GET_WEATHER);
 
-  // Fetch possible city options as the user types
+  // Fetch weather data when a city is selected
   const handleCityInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     setCity(input);
-    setSelectedCity(null); // Reset selected city when the user types
+    setSelectedCity(null);
 
     if (input.length > 2) {
       const options = await getCityOptions(input);
@@ -41,7 +41,7 @@ const Weather: React.FC = () => {
     } else {
       setCityOptions([]);
     }
-    setIsInvalidCity(false); // Reset the invalid city warning
+    setIsInvalidCity(false);
   };
 
   // Handle when a city is selected from the dropdown
@@ -49,13 +49,13 @@ const Weather: React.FC = () => {
     setCity(cityOption.city);
     setSelectedCity(cityOption);
     setCityOptions([]);
-    setIsInvalidCity(false); // Clear invalid city warning
+    setIsInvalidCity(false);
   };
 
   // Handle when the user submits the city
   const handleSearch = () => {
     if (!selectedCity) {
-      setIsInvalidCity(true); // Show invalid city warning
+      setIsInvalidCity(true);
       return;
     }
     fetchWeather({
@@ -68,8 +68,8 @@ const Weather: React.FC = () => {
       <h1 className="text-3xl font-bold text-blue-700 mb-6 text-center">
         Weather App
       </h1>
-
-      {/* Search bar for city name */}
+      
+        {/* City input */}
       <div className="relative mb-4">
         <label className="block mb-2 text-gray-700 font-semibold">
           Enter City Name
@@ -99,7 +99,7 @@ const Weather: React.FC = () => {
           </ul>
         )}
 
-        {/* Display a warning if the user didn't select a city from the dropdown */}
+        {/*Input Validation*/}
         {isInvalidCity && (
           <p className="text-red-500 mt-2 text-sm">
             Please select a city from the dropdown list.
@@ -107,29 +107,28 @@ const Weather: React.FC = () => {
         )}
       </div>
 
-      {/* Submit button */}
+    
       <button
         onClick={handleSearch}
         className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
       >
         Search
       </button>
-
-      {/* Show loading status */}
+      
+      {/* Loading and error messages */}
       {loading && (
         <p className="mt-4 text-blue-600 font-semibold">
           Loading weather data...
         </p>
       )}
 
-      {/* Show error if it exists */}
       {error && (
         <p className="mt-4 text-red-600 font-semibold">
           Error: {error.message}
         </p>
       )}
 
-      {/* Show weather data if available */}
+      {/* Weather data */}
       {data && selectedCity && (
         <div className="mt-8">
           <h2 className="text-xl font-bold text-gray-800 mb-4">
